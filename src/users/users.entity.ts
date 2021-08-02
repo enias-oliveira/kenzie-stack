@@ -9,11 +9,11 @@ export class UserEntity {
   username: string;
 
   @Column()
-  pasword: string;
+  password: string;
 
   @Column()
-  updateAt: Date;
+  updatedAt: Date;
 
   @Column()
-  createAt: Date;
+  createdAt: Date;
 }
