@@ -3,7 +3,7 @@ import { AuthService } from 'src/auth/auth.service';
 import { LocalAuthGuard } from 'src/auth/local-auth.guard';
 import { User, UsersService } from 'src/users/users.service';
 
-@Controller('')
+@Controller()
 export class AuthController {
   constructor(
     private usersService: UsersService,
