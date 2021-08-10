@@ -1,4 +1,4 @@
-import { Body, Controller, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Post, Get, UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { Category } from './categories.entity';
 import { CategoriesService } from './categories.service';
@@ -9,10 +9,16 @@ export class CategoriesController {
   constructor(private categoriesService: CategoriesService) {}
 
   @UseGuards(JwtAuthGuard)
+  @Get()
+  async list(): Promise<Category[]> {
+    return await this.categoriesService.findAll();
+  }
+
+  @UseGuards(JwtAuthGuard)
   @Post()
   async create(
     @Body() createCategoryDto: CreateCategoryDto,
-  ): Promise<Category> {
-    return this.categoriesService.create(createCategoryDto.name);
+  ): Promise<Category | undefined> {
+    return await this.categoriesService.create(createCategoryDto.name);
   }
 }

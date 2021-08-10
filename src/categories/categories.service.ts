@@ -10,6 +10,10 @@ export class CategoriesService {
     private categoryRepository: Repository<Category>,
   ) {}
 
+  async findAll(): Promise<Category[]> {
+    return await this.categoryRepository.find({});
+  }
+
   async create(name: string): Promise<Category | undefined> {
     const nowDate = new Date().toISOString();
 
