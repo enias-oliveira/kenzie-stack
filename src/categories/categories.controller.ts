@@ -1,4 +1,12 @@
-import { Body, Controller, Post, Get, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Post,
+  Get,
+  UseGuards,
+  ValidationPipe,
+  UsePipes,
+} from '@nestjs/common';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { Category } from './categories.entity';
 import { CategoriesService } from './categories.service';
@@ -14,6 +22,7 @@ export class CategoriesController {
     return await this.categoriesService.findAll();
   }
 
+  @UsePipes(new ValidationPipe({ errorHttpStatusCode: 422 }))
   @UseGuards(JwtAuthGuard)
   @Post()
   async create(
