@@ -3,9 +3,11 @@ import {
   Controller,
   Post,
   Get,
+  Put,
   UseGuards,
   ValidationPipe,
   UsePipes,
+  Param,
 } from '@nestjs/common';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { Category } from './categories.entity';
@@ -29,5 +31,17 @@ export class CategoriesController {
     @Body() createCategoryDto: CreateCategoryDto,
   ): Promise<Category | undefined> {
     return await this.categoriesService.create(createCategoryDto.name);
+  }
+
+  @UsePipes(new ValidationPipe({ errorHttpStatusCode: 422 }))
+  @UseGuards(JwtAuthGuard)
+  @Put('/:id')
+  async update(
+    @Body() createCategoryDto: CreateCategoryDto,
+    @Param('id') id,
+  ): Promise<Category | undefined> {
+    const targetCategory = await this.categoriesService.find(Number(id));
+    targetCategory.name = createCategoryDto.name;
+    return await this.categoriesService.update(targetCategory);
   }
 }

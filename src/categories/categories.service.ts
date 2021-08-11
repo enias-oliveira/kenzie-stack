@@ -14,6 +14,10 @@ export class CategoriesService {
     return await this.categoryRepository.find({});
   }
 
+  async find(id: number): Promise<Category> {
+    return await this.categoryRepository.findOne({ id });
+  }
+
   async create(name: string): Promise<Category | undefined> {
     const nowDate = new Date().toISOString();
 
@@ -22,5 +26,9 @@ export class CategoriesService {
       createdAt: nowDate,
       updatedAt: nowDate,
     });
+  }
+
+  async update(category: Category): Promise<Category | undefined> {
+    return await this.categoryRepository.update();
   }
 }
